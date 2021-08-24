@@ -1,0 +1,123 @@
+<!--miniprogram/CalculatorPackage/calculator/calculator.wxml-->
+<view class="header-nav">
+  <view class="nav {{calcul.navActive==0?'text-blue':''}}" data-id="0" bindtap="_hankType">商业贷款</view>
+  <view class="nav {{calcul.navActive==1?'text-blue':''}}" data-id="1" bindtap="_hankType">公积金贷款</view>
+  <view class="nav {{calcul.navActive==2?'text-blue':''}}" data-id="2" bindtap="_hankType">组合贷款</view>
+</view>
+<view class="js-box">
+  <view class="item">
+    <view class="name"> 还款方式</view>
+    <view class="desc">
+      <radio-group bindchange="_hankRepayment">
+        <radio class="radio" value="0" checked="true" />等额本息
+        <radio class="radio" value="1" />等额本金
+      </radio-group>
+    </view>
+  </view>
+  <view class="item" wx:if="{{calcul.navActive!=2}}">
+    <view class="name"> 计算方式</view>
+    <view class="desc">
+      <radio-group bindchange="_hankCalculator">
+        <radio class="radio" value="0" checked="true" />按总价
+        <radio class="radio" value="1" />按单价
+      </radio-group>
+    </view>
+  </view>
+  <view class="" wx:if="{{calcul.navActive==0 ||calcul.navActive==2}}">
+    <view class="item">
+      <view class="name"> 商业贷款总额</view>
+      <view class="desc">
+        <view class="money-info">
+          <input type="number" value="{{cacul.business.price}}" placeholder="请输入贷款总额"></input>
+          <text>万元</text>
+        </view>
+      </view>
+    </view>
+    <view class="item" style="border-bottom:0">
+      <view class="name"> 商业贷款期限</view>
+      <view class="desc">
+        <text>{{calcul.business.year*12}}月({{calcul.year}}年)</text>
+      </view>
+    </view>
+    <view style="border-bottom:1rpx solid #f7f7f7;padding-bottom:20rpx">
+      <slider min="1" max="30" value="{{calcul.year}}" bindchange="_hankBusinessYear"></slider>
+    </view>
+    <view class="item">
+      <view class="name">LPR</view>
+      <view class="desc">
+        <view class="money-info">
+          <input type="number" value="{{calcul.business.lpr}}" disabled placeholder=""></input>
+          <text>%</text>
+        </view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="name">基点</view>
+      <view class="desc">
+        <view class="money-info">
+          <input type="number" value="{{calcul.business.bp}}" bindblur="_hankBusinessBp" placeholder=""></input>
+          <text>BP(%)</text>
+        </view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="name"> 贷款利率</view>
+      <view class="desc">
+        <view class="money-info">
+          <input type="number" value="{{calcul.business.lpr}}%+{{calcul.business.bp*0.01}}%=" placeholder=""></input>
+          <text>{{calcul.business.hl}}%</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="" wx:if="{{calcul.navActive==1 ||calcul.navActive==2}}">
+    <view class="item">
+    <view class="name"> 公积金贷款总额</view>
+    <view class="desc">
+      <view class="money-info">
+        <input type="number" value="{{cacul.provident.price}}" placeholder="请输入贷款总额"></input>
+        <text>万元</text>
+      </view>
+    </view>
+  </view>
+  <view class="item" style="border-bottom:0">
+    <view class="name"> 公积金贷款期限</view>
+    <view class="desc">
+      <text>{{calcul.provident.year*12}}月({{calcul.year}}年)</text>
+    </view>
+  </view>
+  <view style="border-bottom:1rpx solid #f7f7f7;padding-bottom:20rpx">
+    <slider min="1" max="30" value="{{calcul.provident.year}}" bindchange="_hankProvidentYear"></slider>
+  </view>
+  <view class="item">
+      <view class="name">LPR</view>
+      <view class="desc">
+        <view class="money-info">
+          <input type="number" value="{{calcul.provident.lpr}}" disabled placeholder=""></input>
+          <text>%</text>
+        </view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="name">基点</view>
+      <view class="desc">
+        <view class="money-info">
+          <input type="number" value="{{calcul.provident.bp}}" bindblur="_hankProvidentBp" placeholder=""></input>
+          <text>BP(%)</text>
+        </view>
+      </view>
+    </view>
+  <view class="item">
+    <view class="name"> 贷款利率</view>
+    <view class="desc">
+      <view class="money-info">
+        <input type="number" value="{{calcul.provident.lpr}}%+{{calcul.provident.bp*0.01}}%=" placeholder=""></input>
+        <text>{{calcul.provident.hl}}%</text>
+      </view>
+    </view>
+  </view>
+  </view>
+  <view class="btn">
+    <van-button type="info" block>开始计算</van-button>
+  </view>
+</view>
